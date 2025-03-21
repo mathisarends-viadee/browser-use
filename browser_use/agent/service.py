@@ -541,6 +541,7 @@ class Agent(Generic[Context]):
 
 	def _log_agent_run(self) -> None:
 		"""Log the agent run"""
+		logger.info('Test changes')
 		logger.info(f'🚀 Starting task: {self.task}')
 
 		logger.debug(f'Version: {self.version}, Source: {self.source}')
@@ -946,7 +947,9 @@ class Agent(Generic[Context]):
 		response = await self.settings.planner_llm.ainvoke(planner_messages)
 		plan = str(response.content)
 		# if deepseek-reasoner, remove think tags
-		if self.planner_model_name and ('deepseek-r1' in self.planner_model_name or 'deepseek-reasoner' in self.planner_model_name):
+		if self.planner_model_name and (
+			'deepseek-r1' in self.planner_model_name or 'deepseek-reasoner' in self.planner_model_name
+		):
 			plan = self._remove_think_tags(plan)
 		try:
 			plan_json = json.loads(plan)
